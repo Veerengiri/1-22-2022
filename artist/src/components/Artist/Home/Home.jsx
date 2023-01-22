@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <div className="Home">
+    <div className="Home " id="H1">
       {/* <img src="../../server/images/1665120495660.jpg" alt="" /> */}
       <div className="h-left">
         <h1 className="home-t">
@@ -15,13 +15,13 @@ export default function Home() {
           cultural event of their choice. After getting approval one can get
           his/her ID-card for event.
         </h2>
-        <Link to="/signup">
+        <Link to="/events">
           <div className="btn">Explore Events</div>
         </Link>
       </div>
       <div className="h-right">
         <img
-          src="https://raw.githubusercontent.com/KHUNTPRIYANSH/site_photos/main/art-log.png"
+          src="https://idcardgenrator.s3.ap-northeast-1.amazonaws.com/siteimage/art-log.png"
           alt=""
         />
       </div>

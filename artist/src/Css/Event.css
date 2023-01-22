@@ -121,3 +121,34 @@
   border-radius: 2px !important;
   border: 1.05px solid var(--color2d) !important;
 }
+.info-des {
+  /* color: pink; */
+  height: 10vh;
+  overflow-y: scroll;
+  text-transform: capitalize;
+  /* background: crimson; */
+}
+#join {
+  background: none;
+  border: 1.5px solid var(--color2d);
+  border-radius: 3px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-top: 15px;
+  padding: 7px 35px;
+  gap: 7.5px;
+  color: var(--color2d);
+  border-color: rgb(43, 220, 20);
+  transition: 0.45s all ease-in-out;
+}
+#join:hover {
+  background-color: rgb(35, 200, 13);
+  border-radius: 9px;
+  color: whitesmoke;
+
+  /* border: 0px; */
+  /* font-weight: bold; */
+}

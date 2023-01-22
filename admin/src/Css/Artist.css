@@ -144,7 +144,7 @@ a {
 }
 .hid-sec button:hover {
   background: var(--gold2);
-  color: var(--color1d);
+  /* color: var(--color1d); */
 }
 .event-sec {
   height: auto;

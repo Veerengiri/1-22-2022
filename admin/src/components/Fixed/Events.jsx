@@ -1,7 +1,43 @@
-import React, { useContext, useState } from "react";
+import { useEffect, useContext, useState } from "react";
+// import { useEffect } from "react";
 import Tilt from "react-parallax-tilt";
+import { useNavigate } from "react-router-dom";
 import "../../Css/Event.css";
-const Events = () => {
+import Loading from "./Loading";
+const Events = (props) => {
+  const {backend,islogin}=props;
+  const user = "admin";
+  const [events, setEvents] = useState([]);
+  
+  const getevents = async () => {
+    const res = await fetch(`${backend}/api/getevent`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    const data = await res.json();
+    setEvents(data.events);
+  };
+  const deleteEvent = async (id) => {
+    if (window.confirm("delete?")) {
+      const res = await fetch(`${backend}/api/devent/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+      const data = await res.json();
+      alert(data.status);
+    }
+  };
+  const nav = useNavigate();
+  useEffect(() => {
+    if(!islogin){
+      nav("/singIn");
+    }
+    getevents();
+  }, []);
   return (
     <div className="eee">
       <div>
@@ -16,162 +52,43 @@ const Events = () => {
         </header>
         <section>
           <div className="e-list">
-            <Tilt
-              glareEnable={true}
-              glareColor="#ebe7ee47"
-              glarePosition="all"
-              tiltMaxAngleX="13"
-              tiltMaxAngleY="4"
-            >
-              <div className="card">
-                <div className="card-img">
-                  <img src="https://raw.githubusercontent.com/KHUNTPRIYANSH/site_photos/main/event1.jpg" />
-                  <div className="time">
-                    24 <br /> Nov
+            {events.length===0? <div style={{width:"100vw"}} ><Loading/></div> :events.map((cr) => {
+              return (
+                <Tilt
+                  glareEnable={true}
+                  glareColor="#ebe7ee47"
+                  glarePosition="all"
+                  tiltMaxAngleX="13"
+                  tiltMaxAngleY="4"
+                >
+                  <div className="card">
+                    <div className="card-img">
+                      <img src={cr.image} />
+                      <div className="time">
+                        {cr.eventDay} <br /> {cr.eventMonth}
+                      </div>
+                    </div>
+                    <div className="card-info">
+                      <div className="info-loc">{cr.destination}</div>
+                      <div className="info-t">{cr.name}</div>
+                      <div className="info-des">
+                        {cr.desc} <br />
+                      </div>
+                      {/* <div className="join btn">Join Now</div> */}
+                    </div>
+                    <button
+                      id="del"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        deleteEvent(cr._id);
+                      }}
+                    >
+                      Delete
+                    </button>
                   </div>
-                </div>
-                <div className="card-info">
-                  <div className="info-loc">Rajkot</div>
-                  <div className="info-t">Gujarat Dance Fest</div>
-                  <div className="info-des">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cupiditate voluptatum ad alias minus dolores, consequuntur
-                    repellendus culpa nam, quaerat.
-                  </div>
-                  {/* <div className="join btn">Join Now</div> */}
-                </div>
-              </div>
-            </Tilt>
-            <Tilt
-              glareEnable={true}
-              glareColor="#ebe7ee80"
-              glarePosition="all"
-              tiltMaxAngleX="13"
-              tiltMaxAngleY="4"
-            >
-              <div className="card">
-                <div className="card-img">
-                  <img src="https://raw.githubusercontent.com/KHUNTPRIYANSH/site_photos/main/event-2.jpg" />
-                  <div className="time">
-                    12 <br /> Jan
-                  </div>
-                </div>
-                <div className="card-info">
-                  <div className="info-loc">Surat</div>
-                  <div className="info-t">Local Cultural Fest</div>
-                  <div className="info-des">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cupiditate voluptatum ad alias minus dolores, consequuntur
-                    repellendus culpa nam, quaerat.
-                  </div>
-                  {/* <div className="join btn">Join Now</div> */}
-                </div>
-              </div>
-            </Tilt>
-            <Tilt
-              glareEnable={true}
-              glareColor="#ebe7ee80"
-              glarePosition="all"
-              tiltMaxAngleX="13"
-              tiltMaxAngleY="4"
-            >
-              <div className="card">
-                <div className="card-img">
-                  <img src="https://raw.githubusercontent.com/KHUNTPRIYANSH/site_photos/main/event-2.jpg" />
-                  <div className="time">
-                    12 <br /> Jan
-                  </div>
-                </div>
-                <div className="card-info">
-                  <div className="info-loc">Surat</div>
-                  <div className="info-t">Local Cultural Fest</div>
-                  <div className="info-des">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cupiditate voluptatum ad alias minus dolores, consequuntur
-                    repellendus culpa nam, quaerat.
-                  </div>
-                  {/* <div className="join btn">Join Now</div> */}
-                </div>
-              </div>
-            </Tilt>{" "}
-            <Tilt
-              glareEnable={true}
-              glareColor="#ebe7ee47"
-              glarePosition="all"
-              tiltMaxAngleX="13"
-              tiltMaxAngleY="4"
-            >
-              <div className="card">
-                <div className="card-img">
-                  <img src="https://raw.githubusercontent.com/KHUNTPRIYANSH/site_photos/main/event1.jpg" />
-                  <div className="time">
-                    24 <br /> Nov
-                  </div>
-                </div>
-                <div className="card-info">
-                  <div className="info-loc">Rajkot</div>
-                  <div className="info-t">Gujarat Dance Fest</div>
-                  <div className="info-des">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cupiditate voluptatum ad alias minus dolores, consequuntur
-                    repellendus culpa nam, quaerat.
-                  </div>
-                  {/* <div className="join btn">Join Now</div> */}
-                </div>
-              </div>
-            </Tilt>
-            <Tilt
-              glareEnable={true}
-              glareColor="#ebe7ee47"
-              glarePosition="all"
-              tiltMaxAngleX="13"
-              tiltMaxAngleY="4"
-            >
-              <div className="card">
-                <div className="card-img">
-                  <img src="https://raw.githubusercontent.com/KHUNTPRIYANSH/site_photos/main/event1.jpg" />
-                  <div className="time">
-                    24 <br /> Nov
-                  </div>
-                </div>
-                <div className="card-info">
-                  <div className="info-loc">Rajkot</div>
-                  <div className="info-t">Gujarat Dance Fest</div>
-                  <div className="info-des">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cupiditate voluptatum ad alias minus dolores, consequuntur
-                    repellendus culpa nam, quaerat.
-                  </div>
-                  {/* <div className="join btn">Join Now</div> */}
-                </div>
-              </div>
-            </Tilt>
-            <Tilt
-              glareEnable={true}
-              glareColor="#ebe7ee80"
-              glarePosition="all"
-              tiltMaxAngleX="13"
-              tiltMaxAngleY="4"
-            >
-              <div className="card">
-                <div className="card-img">
-                  <img src="https://raw.githubusercontent.com/KHUNTPRIYANSH/site_photos/main/event-2.jpg" />
-                  <div className="time">
-                    12 <br /> Jan
-                  </div>
-                </div>
-                <div className="card-info">
-                  <div className="info-loc">Surat</div>
-                  <div className="info-t">Local Cultural Fest</div>
-                  <div className="info-des">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cupiditate voluptatum ad alias minus dolores, consequuntur
-                    repellendus culpa nam, quaerat.
-                  </div>
-                  {/* <div className="join btn">Join Now</div> */}
-                </div>
-              </div>
-            </Tilt>
+                </Tilt>
+              );
+            })}
           </div>
         </section>
       </div>

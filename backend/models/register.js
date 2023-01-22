@@ -24,7 +24,7 @@ const registeruser=new mongoose.SchemaTypeOptions({
     },
     TOP:{
         type:String,
-        required:true
+        // required:true
     },
     FOICD:{
         type:String,
@@ -60,6 +60,9 @@ const registeruser=new mongoose.SchemaTypeOptions({
         required:true
     },
    date:{
+    type:String
+   },
+   fulltime:{
     type:String
    }
 })

@@ -97,3 +97,37 @@
 .message {
   padding: 0 10vw;
 }
+.team-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.team-info > * {
+  width: 100%;
+}
+.rdo {
+  background-color: var(--dark2);
+  width: 100%;
+  display: flex;
+  gap: 15px;
+}
+.rdo > div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  gap: 10px;
+  margin-left: 15px;
+}
+#rd-btn {
+  width: fit-content;
+}
+.selectdiv{
+  margin: 5px 0px;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.135);
+  /* text-align: center; */
+}
+.selectdiv:hover{
+  border: 1px solid white;
+}

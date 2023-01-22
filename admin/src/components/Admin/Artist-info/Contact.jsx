@@ -1,6 +1,6 @@
 import React from "react";
-import "../../../Css/Contact.css";
-import "../../../Css/EventForm.css";
+import "./Contact.css";
+import "./EventForm.css";
 import Person2Icon from "@mui/icons-material/Person2";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import FestivalIcon from "@mui/icons-material/Festival";
@@ -13,23 +13,17 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { height } from "@mui/system";
 import Loading from "../../Fixed/Loading";
-
 const Contact = (props) => {
   const {backend,islogin,userId}=props;
+  
   const [chats,setChats]=useState([]);
   const [message,setMessage]=useState("");
   const [submit,setSubmit]=useState("Submit");
-  const [nodata,setNodata]=useState(false);
   const nav = useNavigate();
   const getchat= async ()=>{
-    const res = await fetch(`${backend}/chat/user/${userId}`,{method:"GET"});
+    const res = await fetch(`${backend}/chat/user/${userId.id}`,{method:"GET"});
     const data = await res.json();
-    if(data.chats.length==0){
-      setNodata(true);
-    }else{
-      setNodata(false);
-      setChats(data.chats);
-    }
+    setChats(data.chats);
     const mb =document.getElementById('messagebox');
     mb.scrollTo(0,mb.scrollHeight);
    
@@ -44,25 +38,25 @@ const Contact = (props) => {
       return;
     }
     setSubmit("Submiting...")
-    const res = await fetch(`${backend}/chat/user`,{
+    const res = await fetch(`${backend}/chat/admin`,{
       method:"POST",
       headers:{
         "content-type":"application/json"
       },
       body:JSON.stringify({
-        id:userId,
+        id:userId.id,
         message
       })
     });
     const data = await res.json();
     if(data.status=="ok"){
-      setNodata(false);
       setChats([...chats,data.chats]);
-      setMessage("");
       setTimeout(() => {
+        
         const mb =document.getElementById('messagebox');
         mb.scrollTo(0,mb.scrollHeight);
       }, 500);
+      setMessage("");
     }else{
       alert(data.status);
     }
@@ -80,7 +74,7 @@ const Contact = (props) => {
   useEffect(()=>{
     if(islogin){
       getchat();
-      window.scrollTo(0,100);
+      window.scrollTo(0,400);
     }else{
       nav("/")
     }
@@ -89,17 +83,17 @@ const Contact = (props) => {
     <div id="H5" style={{minHeight:'100vh',marginBottom:"10px"}}>
       <header className="event-sec" style={{position:"sticky",top:"70px"}}>
         <div className="e-title">
-          Add
-          <span id="golden"> Your </span>
+          Artist {" "}
+          <span id="golden">{userId.name}</span> {" "}
           Quarry
         </div>
       </header>
       <div className="message">
-        <div style={{display:'flex',flexDirection:'column',height:"50vh",overflow:"scroll"}} id="messagebox" >
-          {chats.length==0 && !nodata?<Loading/> : nodata?<div>no quarrys</div> :    chats.map((ct,index)=>{
-            return <div style={{display:'flex',justifyContent:`${ct.status?"start":"end"}`}}>
-              <p style={{margin:"10px",padding:"10px",backgroundColor:`${ct.status?"rgb(255,255,255,.2)":"rgb(0,255,0,.2)"}`,maxWidth:"60vw",borderRadius:"5px"}}>{ct.message} {" "}
-              <span style={{cursor:"pointer",display:`${!ct.status?"unset":"none"}`}} onClick={()=>{deletchat(ct._id,index)}}>❎</span></p>
+        <div style={{display:'flex',flexDirection:'column',height:"40vh",overflow:"scroll"}} id="messagebox" >
+          {chats.length==0?<Loading/> : chats.map((ct,index)=>{
+            return <div style={{display:'flex',justifyContent:`${ct.status?"end":"start"}`}}>
+              <p style={{margin:"10px",padding:"10px",backgroundColor:`${!ct.status?"rgb(255,255,255,.2)":"rgb(0,255,0,.2)"}`,maxWidth:"60vw",borderRadius:"5px"}}>{ct.message} {" "}
+               <span style={{cursor:"pointer",display:`${!ct.status?"none":"unset"}`}} onClick={()=>{deletchat(ct._id,index)}}>❎</span></p>
             </div>
           })}
         </div>
@@ -110,7 +104,7 @@ const Contact = (props) => {
               {" "}
               <NumbersIcon />
             </label>
-            <input type="text" value={message} onChange={(e)=>{setMessage(e.target.value)}} className="name" placeholder="Enter Your Quarry" />
+            <input type="text" value={message} onChange={(e)=>{setMessage(e.target.value)}} className="name" placeholder="Reply" />
           </div>
           <div className="forbtn">
             <div className="btn" onClick={handlesubmit}>{submit}</div>

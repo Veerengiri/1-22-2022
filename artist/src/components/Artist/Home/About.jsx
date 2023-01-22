@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const About = () => {
   return (
     <>
-      <div className="about">
+      <div className="about" id="H2">
         <div className="a-left">
           <div className="blue">About Us</div>
           <div className="tt-title">
@@ -30,13 +30,13 @@ const About = () => {
             reprehenderit dolor doloribus neque, facilis maxime voluptas atque.
             Quas vero temporibus repudiandae
           </div>
-          <Link to="/signup">
+          {/* <Link to="/signup">
             <div className="btn">Explore Events</div>
-          </Link>
+          </Link> */}
         </div>
         <div className="a-right">
           <img
-            src="https://raw.githubusercontent.com/KHUNTPRIYANSH/site_photos/main/divyanshi-verma-h3SyJYsqYSo-unsplash.jpg"
+            src="https://idcardgenrator.s3.ap-northeast-1.amazonaws.com/siteimage/divyanshi-verma-h3SyJYsqYSo-unsplash.jpg"
             alt=""
           />
         </div>

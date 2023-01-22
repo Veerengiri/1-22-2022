@@ -44,7 +44,7 @@
 }
 .wpp {
   display: flex;
-  /* gap: 25px; */
+  gap: 25px;
 }
 .nn2 {
   display: flex !important;
@@ -93,4 +93,32 @@
   font-family: 'Alegreya', sans-serif;
   font-size: 1.05rem;
   border: transparent;
+}
+.message {
+  padding: 0 10vw;
+}
+.team-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.team-info > * {
+  width: 100%;
+}
+.rdo {
+  background-color: var(--dark2);
+  width: 100%;
+  display: flex;
+  gap: 15px;
+}
+.rdo > div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  gap: 10px;
+  margin-left: 15px;
+}
+#rd-btn {
+  width: fit-content;
 }
